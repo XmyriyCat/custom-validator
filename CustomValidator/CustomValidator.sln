@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomValidator", "CustomValidator.csproj", "{CFD30C8A-21B4-4EAD-9DD3-F060E8EF8E33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomValidator", "CustomValidator.csproj", "{CFD30C8A-21B4-4EAD-9DD3-F060E8EF8E33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validator", "..\Validator\Validator.csproj", "{1C1C7531-C2B0-405A-8517-A421C3EC9360}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CFD30C8A-21B4-4EAD-9DD3-F060E8EF8E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFD30C8A-21B4-4EAD-9DD3-F060E8EF8E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFD30C8A-21B4-4EAD-9DD3-F060E8EF8E33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C1C7531-C2B0-405A-8517-A421C3EC9360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C1C7531-C2B0-405A-8517-A421C3EC9360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C1C7531-C2B0-405A-8517-A421C3EC9360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C1C7531-C2B0-405A-8517-A421C3EC9360}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
