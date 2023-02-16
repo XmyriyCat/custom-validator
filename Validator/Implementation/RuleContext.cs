@@ -2,8 +2,8 @@
 
 namespace Validator.Implementation
 {
-    public class RuleContext<T, TPropery>
+    public class RuleContext<T, TProperty>
     {
-        public IValidationRule<T, TPropery> Rules;
+        public IValidationRule<T, TProperty> Rules;
     }
 }

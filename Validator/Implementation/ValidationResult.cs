@@ -21,6 +21,16 @@
             }
         }
 
+        public void AddValidationError(ValidationError error)
+        {
+            if (error is null)
+            {
+                return;
+            }
+
+            _errors.Append(error);
+        }
+
         public override string ToString()
         {
             return ToString(" ");

@@ -1,6 +1,6 @@
 ﻿namespace Validator.Contracts
 {
-    public interface IValidationRule<T, TPropery>
+    public interface IValidationRule<T, TProperty>
     {
 
     }
