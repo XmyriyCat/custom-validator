@@ -13,7 +13,7 @@
                 Age = 19
             };
 
-            userValidator.Validate(user);
+            var validationResult = userValidator.Validate(user);
 
             Console.WriteLine("Hello, World!");
         }

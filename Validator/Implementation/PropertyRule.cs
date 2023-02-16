@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using System.Diagnostics.Metrics;
+using System.Linq.Expressions;
+using System.Reflection;
 using Validator.Contracts;
 
 namespace Validator.Implementation
@@ -7,7 +9,7 @@ namespace Validator.Implementation
     {
         public MemberExpression MemberExpression { get; }
 
-        public IEnumerable<PropertyComponent<T, TProperty>> Components { get; set; } = new List<PropertyComponent<T, TProperty>>();
+        public List<IPropertyComponent<T, TProperty>> Components { get; set; } = new List<IPropertyComponent<T, TProperty>>();
 
         public PropertyRule(MemberExpression memberExpression)
         {
@@ -16,9 +18,28 @@ namespace Validator.Implementation
 
         public IPropertyRule<T, TProperty> AddPropertyComponent(IPropertyComponent<T, TProperty> item)
         {
-            Components.Append(item);
+            Components.Add(item);
 
             return this;
+        }
+
+        public void ValidateComponents(T item)
+        {
+            var property = MemberExpression.Member as PropertyInfo;
+            if (property is null)
+            {
+                // TODO Create new Exception class!
+                throw new NotImplementedException("Create new Exception");
+            }
+
+            var propertyValueObj = property.GetValue(item);
+
+            var propertyValue = (TProperty)propertyValueObj;
+
+            foreach (var component in Components)
+            {
+                component.InvokePropertyValidator(propertyValue);
+            }
         }
     }
 }

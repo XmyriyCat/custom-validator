@@ -5,14 +5,14 @@ namespace Validator.Implementation
 {
     public abstract class AbstractValidator<T> : IValidator<T>
     {
-        public IEnumerable<IPropertyRule<T>> PropertyRules = new List<IPropertyRule<T>>();
+        public List<IPropertyRule<T>> PropertyRules = new List<IPropertyRule<T>>();
 
         public IPropertyRule<T, TProperty> AddValidationRule<TProperty>(Expression<Func<T, TProperty>> expression)
         {
             // TODO Check nullable expression
 
             var member = expression.Body as MemberExpression;
-            
+
             if (member is null)
             {
                 // TODO Create new Exception class!
@@ -21,7 +21,7 @@ namespace Validator.Implementation
 
             var rule = new PropertyRule<T, TProperty>(member);
 
-            PropertyRules.Append(rule);
+            PropertyRules.Add(rule);
 
             //var member = expression.Body as MemberExpression;
             //if (member is not null)
@@ -38,7 +38,11 @@ namespace Validator.Implementation
 
         public ValidationResult Validate(T item)
         {
-            // TODO Implement this method!
+            foreach (var rule in PropertyRules)
+            {
+                rule.ValidateComponents(item);
+            }
+
             throw new NotImplementedException();
         }
 
