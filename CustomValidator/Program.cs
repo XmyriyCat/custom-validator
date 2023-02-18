@@ -9,7 +9,7 @@
             var user = new User
             {
                 Id = 1,
-                Name = "Pavel",
+                Name = null,
                 Age = 19
             };
 

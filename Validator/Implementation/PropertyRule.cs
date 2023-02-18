@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Metrics;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Reflection;
 using Validator.Contracts;
 
@@ -23,9 +22,10 @@ namespace Validator.Implementation
             return this;
         }
 
-        public void ValidateComponents(T item)
+        public ValidationPropertyResult ValidateComponents(T item)
         {
             var property = MemberExpression.Member as PropertyInfo;
+
             if (property is null)
             {
                 // TODO Create new Exception class!
@@ -36,10 +36,19 @@ namespace Validator.Implementation
 
             var propertyValue = (TProperty)propertyValueObj;
 
+            var validationPropertyResult = new ValidationPropertyResult();
+
             foreach (var component in Components)
             {
-                component.InvokePropertyValidator(propertyValue);
+                var componentResult = component.InvokePropertyValidator(propertyValue);
+
+                if (!componentResult.IsValid)
+                {
+                    validationPropertyResult.AddValidationComponentResult(componentResult);
+                }
             }
+
+            return validationPropertyResult;
         }
     }
 }

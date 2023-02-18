@@ -4,6 +4,6 @@ namespace Validator.Contracts
 {
     public interface IPropertyValidator<T, in TProperty>
     {
-        ValidationResult Validate(TProperty value);
+        ValidationComponentResult Validate(TProperty value);
     }
 }

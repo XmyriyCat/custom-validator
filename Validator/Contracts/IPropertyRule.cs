@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Validator.Implementation;
 
 namespace Validator.Contracts
 {
@@ -6,7 +7,7 @@ namespace Validator.Contracts
     {
         MemberExpression MemberExpression { get; }
 
-        void ValidateComponents (T item);
+        ValidationPropertyResult ValidateComponents (T item);
     }
 
     public interface IPropertyRule<T, out TProperty> : IPropertyRule<T>

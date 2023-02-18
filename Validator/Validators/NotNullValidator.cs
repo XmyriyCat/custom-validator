@@ -5,24 +5,19 @@ namespace Validator.Validators
 {
     public class NotNullValidator<T, TProperty> : IPropertyValidator<T, TProperty>
     {
-        public ValidationResult Validate(TProperty value)
+        public ValidationComponentResult Validate(TProperty value)
         {
             if (value is not null)
             {
-                // return successful ValidationResult without errors.
-                return new ValidationResult();
+                // return successful ValidationComponentResult without errors.
+                return new ValidationComponentResult();
             }
 
-            var validationError = new ValidationError()
-            {
-                Message = "Source value is null"
-            };
+            var componentError = new ValidationComponentError("Source value is null");
 
-            var validationResult = new ValidationResult();
+            var validationError = new ValidationComponentResult(componentError);
 
-            validationResult.AddValidationError(validationError);
-
-            return validationResult;
+            return validationError;
         }
     }
 }

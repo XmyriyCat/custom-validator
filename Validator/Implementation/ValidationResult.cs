@@ -2,12 +2,12 @@
 {
     public class ValidationResult
     {
-        private IEnumerable<ValidationError> _errors = new List<ValidationError>();
+        private List<ValidationPropertyResult> _results = new List<ValidationPropertyResult>();
         public bool IsValid => !Errors.Any();
 
-        public IEnumerable<ValidationError> Errors
+        public IEnumerable<ValidationPropertyResult> Errors
         {
-            get => _errors;
+            get => _results;
             set
             {
                 if (value is null)
@@ -15,20 +15,20 @@
                     throw new ArgumentNullException();
                 }
 
-                var existingErrors = value.Where(error => error is not null);
+                var existingErrors = value.Where(error => error is not null).ToList();
 
-                _errors = existingErrors;
+                _results = existingErrors;
             }
         }
 
-        public void AddValidationError(ValidationError error)
+        public void AddValidationError(ValidationPropertyResult propertyResult)
         {
-            if (error is null)
+            if (propertyResult is null)
             {
                 return;
             }
 
-            _errors.Append(error);
+            _results.Add(propertyResult);
         }
 
         public override string ToString()
@@ -38,7 +38,8 @@
 
         public string ToString(string separator)
         {
-            return string.Join(separator, _errors.Select(error => error.Message));
+            return string.Join(separator, _results.Select(result => result.ToString()));
+            return string.Empty;
         }
     }
 }

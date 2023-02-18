@@ -11,11 +11,11 @@ namespace Validator.Implementation
             _propertyValidator = propertyValidator;
         }
 
-        public ValidationResult InvokePropertyValidator(TProperty value)
+        public ValidationComponentResult InvokePropertyValidator(TProperty value)
         {
-            var validationResult = _propertyValidator.Validate(value);
+            var validationError = _propertyValidator.Validate(value);
 
-            return validationResult;
+            return validationError;
         }
     }
 }

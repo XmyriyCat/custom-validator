@@ -22,28 +22,25 @@ namespace Validator.Implementation
             var rule = new PropertyRule<T, TProperty>(member);
 
             PropertyRules.Add(rule);
-
-            //var member = expression.Body as MemberExpression;
-            //if (member is not null)
-            //{
-            //    var property = member.Member as PropertyInfo;
-            //    if (property is not null)
-            //    {
-            //        //property.GetValue();
-            //    }
-            //}
-
+            
             return rule;
         }
 
         public ValidationResult Validate(T item)
         {
+            var validationResult = new ValidationResult();
+
             foreach (var rule in PropertyRules)
             {
-                rule.ValidateComponents(item);
+                var validationPropertyResult = rule.ValidateComponents(item);
+
+                if (!validationPropertyResult.IsValid)
+                {
+                    validationResult.AddValidationError(validationPropertyResult);
+                }
             }
 
-            throw new NotImplementedException();
+            return validationResult;
         }
 
         public void ValidateAndThrow(T item)
