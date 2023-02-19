@@ -8,7 +8,7 @@ namespace Validator.Implementation
     {
         public MemberExpression MemberExpression { get; }
 
-        public List<IPropertyComponent<T, TProperty>> Components { get; set; } = new List<IPropertyComponent<T, TProperty>>();
+        private List<IPropertyComponent<T, TProperty>> _components = new List<IPropertyComponent<T, TProperty>>();
 
         public PropertyRule(MemberExpression memberExpression)
         {
@@ -17,7 +17,7 @@ namespace Validator.Implementation
 
         public IPropertyRule<T, TProperty> AddPropertyComponent(IPropertyComponent<T, TProperty> item)
         {
-            Components.Add(item);
+            _components.Add(item);
 
             return this;
         }
@@ -28,8 +28,7 @@ namespace Validator.Implementation
 
             if (property is null)
             {
-                // TODO Create new Exception class!
-                throw new NotImplementedException("Create new Exception");
+                throw new ArgumentNullException($"{typeof(PropertyInfo)} {nameof(property)} is null" );
             }
 
             var propertyValueObj = property.GetValue(item);
@@ -38,7 +37,7 @@ namespace Validator.Implementation
 
             var validationPropertyResult = new ValidationPropertyResult();
 
-            foreach (var component in Components)
+            foreach (var component in _components)
             {
                 var componentResult = component.InvokePropertyValidator(propertyValue);
 

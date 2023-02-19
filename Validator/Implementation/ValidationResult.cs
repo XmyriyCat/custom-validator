@@ -3,7 +3,8 @@
     public class ValidationResult
     {
         private List<ValidationPropertyResult> _results = new List<ValidationPropertyResult>();
-        public bool IsValid => !Errors.Any();
+        public bool IsValid 
+            => !Errors.Any();
 
         public IEnumerable<ValidationPropertyResult> Errors
         {
@@ -39,7 +40,6 @@
         public string ToString(string separator)
         {
             return string.Join(separator, _results.Select(result => result.ToString()));
-            return string.Empty;
         }
     }
 }

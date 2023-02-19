@@ -13,22 +13,17 @@
                 return;
             }
 
-            Errors.Add(error);
+            Error = error;
         }
 
-        public List<ValidationComponentError> Errors { get; set; } = new List<ValidationComponentError>();
+        public ValidationComponentError Error { get; set; }
 
-        public bool IsValid 
-            => Errors.Count == 0;
+        public bool IsValid
+            => Error is null;
 
         public override string ToString()
         {
-            return ToString(" ");
-        }
-
-        public string ToString(string separator)
-        {
-            return string.Join(separator, Errors.Select(error => error.ErrorName));
+            return Error.ErrorName;
         }
     }
 }

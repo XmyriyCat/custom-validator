@@ -14,8 +14,8 @@
             };
 
             var validationResult = userValidator.Validate(user);
-
-            Console.WriteLine("Hello, World!");
+            
+            Console.WriteLine(validationResult.ToString());
         }
     }
 }

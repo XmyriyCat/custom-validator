@@ -1,36 +1,44 @@
 ﻿using System.Linq.Expressions;
 using Validator.Contracts;
+using Validator.Exceptions;
 
 namespace Validator.Implementation
 {
     public abstract class AbstractValidator<T> : IValidator<T>
     {
-        public List<IPropertyRule<T>> PropertyRules = new List<IPropertyRule<T>>();
+        private List<IPropertyRule<T>> _propertyRules = new List<IPropertyRule<T>>();
 
-        public IPropertyRule<T, TProperty> AddValidationRule<TProperty>(Expression<Func<T, TProperty>> expression)
+        protected IPropertyRule<T, TProperty> AddValidationRule<TProperty>(Expression<Func<T, TProperty>> expression)
         {
-            // TODO Check nullable expression
+            if (expression is null)
+            {
+                throw new ArgumentNullException($"{nameof(expression)} is null.");
+            }
 
             var member = expression.Body as MemberExpression;
 
             if (member is null)
             {
-                // TODO Create new Exception class!
-                throw new NotImplementedException("Create new Exception");
+                throw new ArgumentNullException($"MemberExpression {nameof(member)} is null.");
             }
 
             var rule = new PropertyRule<T, TProperty>(member);
 
-            PropertyRules.Add(rule);
-            
+            _propertyRules.Add(rule);
+
             return rule;
         }
 
         public ValidationResult Validate(T item)
         {
+            if (item is null)
+            {
+                throw new ArgumentNullException($"{nameof(item)} is null.");
+            }
+
             var validationResult = new ValidationResult();
 
-            foreach (var rule in PropertyRules)
+            foreach (var rule in _propertyRules)
             {
                 var validationPropertyResult = rule.ValidateComponents(item);
 
@@ -45,8 +53,12 @@ namespace Validator.Implementation
 
         public void ValidateAndThrow(T item)
         {
-            // TODO Implement this method!
-            throw new NotImplementedException();
+            var validationResult = Validate(item);
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.ToString());
+            }
         }
     }
 }
