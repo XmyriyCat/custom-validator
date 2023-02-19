@@ -27,5 +27,27 @@ namespace Validator.Extensions
 
             return result;
         }
+
+        public static IPropertyRule<T, TProperty> GreaterThan<T, TProperty>(this IPropertyRule<T, TProperty> rule, TProperty value) where TProperty : IComparable<TProperty>, IComparable
+        {
+            var validator = new GreaterThanValidator<T, TProperty>(value);
+
+            var component = new PropertyComponent<T, TProperty>(validator);
+
+            var result = rule.AddPropertyComponent(component);
+
+            return result;
+        }
+
+        public static IPropertyRule<T, TProperty> GreaterThanOrEqual<T, TProperty>(this IPropertyRule<T, TProperty> rule, TProperty value) where TProperty : IComparable<TProperty>, IComparable
+        {
+            var validator = new GreaterThanOrEqualValidator<T, TProperty>(value);
+
+            var component = new PropertyComponent<T, TProperty>(validator);
+
+            var result = rule.AddPropertyComponent(component);
+
+            return result;
+        }
     }
 }
