@@ -16,5 +16,16 @@ namespace Validator.Extensions
 
             return result;
         }
+
+        public static IPropertyRule<T, string> Length<T>(this IPropertyRule<T, string> rule, int min, int max)
+        {
+            var validator = new LengthValidator<T, string>(min, max);
+
+            var component = new PropertyComponent<T, string>(validator);
+
+            var result = rule.AddPropertyComponent(component);
+
+            return result;
+        }
     }
 }

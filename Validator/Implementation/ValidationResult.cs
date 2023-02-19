@@ -6,7 +6,7 @@
         public bool IsValid 
             => !Errors.Any();
 
-        public IEnumerable<ValidationPropertyResult> Errors
+        public List<ValidationPropertyResult> Errors
         {
             get => _results;
             set
